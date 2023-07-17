@@ -1,0 +1,19 @@
+#!/bin/bash
+
+myvalue=$(zenity --forms --title="Create User" --text="Add new user" --add-entry="Username" --add-entry="UID" --add-entry="GID" --add-entry="GECOS" --add-entry="Userdirctory" --add-entry="Default Shell" --add-password="Password" --add-calendar="Expires")
+
+username=$(echo $myvalue | cut -d "|" -f 1)
+userid=$(echo $myvalue | cut -d "|" -f 2)
+groupid=$(echo $myvalue | cut -d "|" -f 3)
+gcosname=$(echo $myvalue | cut -d "|" -f 4)
+
+userdirctory=$(echo $myvalue | cut -d "|" -f 5)
+defaultshell=$(echo $myvalue | cut -d "|" -f 6)
+userpassword=$(echo $myvalue | cut -d "|" -f 7)
+expires=$(echo $myvalue | cut -d "|" -f 8)
+
+
+
+
+useradd -u $userid -c $gcosname -d $userdirctory -s $defaultshell -e $expires -p $(openssl passwd -1 $userpassword) $username
+
